@@ -1,0 +1,6 @@
+
+##Query to find comments on the basic of user name
+db.pages.find({"posts.heading":"webonise lab","posts.comments.comment_by":"Arjun"},{"posts.comments.$":1}).pretty();
+
+##Query to no. of posts per page
+db.pages.aggregate([{"$unwind": "$posts"},{"$group": {"_id": "$posts.heading","count": {"$sum": 1}}},{"$group": {"_id":"heading","total": {"$sum": "$count"}}}])
