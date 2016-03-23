@@ -1,6 +1,9 @@
+//number of posts per page
+db.pages.aggregate([{$project: {"title": 1,"_id":0,numberOfPosts: { $size: "$posts" }}}]).pretty()
 
-##Query to find comments on the basic of user name
-db.pages.find({"posts.heading":"webonise lab","posts.comments.comment_by":"Arjun"},{"posts.comments.$":1}).pretty();
+//update title of comment
+db.pages.update({title:"Get Job","posts.heading":"You can get a job","posts.comments.title":"here is my resume"},{$set:{"posts.0.comments.0.title":"My Resume"}});
 
-##Query to no. of posts per page
-db.pages.aggregate([{"$unwind": "$posts"},{"$group": {"_id": "$posts.heading","count": {"$sum": 1}}},{"$group": {"_id":"heading","total": {"$sum": "$count"}}}])
+//query to insert a comment on post
+db.pages.update({"posts._id":111},{$push:{"posts.$.comments":{_id:1002,"owner_id":3,title:"me too",date:"15-11-2015"}}});
+
