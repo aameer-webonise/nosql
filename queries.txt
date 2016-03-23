@@ -1,7 +1,7 @@
-//number of posts per page
+//find number of posts per page
 db.pages.aggregate([{$project: {"title": 1,"_id":0,numberOfPosts: { $size: "$posts" }}}]).pretty()
 
-//update title of comment
+//update title of a single comment
 db.pages.update({title:"Get Job","posts.heading":"You can get a job","posts.comments.title":"here is my resume"},{$set:{"posts.0.comments.0.title":"My Resume"}});
 
 //query to insert a comment on post
